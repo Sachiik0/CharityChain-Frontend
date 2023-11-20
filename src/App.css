@@ -1,0 +1,29 @@
+/* App.css */
+
+.App {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    font-family: 'Arial', sans-serif;
+    text-align: center; /* Center the text inside the container */
+  }
+  
+  button {
+    margin: 8px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  p {
+    margin: 4px 0;
+  }
+  
+  /* Add more styles as needed for your specific components */
+  
