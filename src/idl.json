@@ -78,6 +78,22 @@
           "type": "u64"
         }
       ]
+    },
+    {
+      "name": "finishCampaign",
+      "accounts": [
+        {
+          "name": "campaign",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": []
     }
   ],
   "accounts": [
@@ -101,6 +117,10 @@
           {
             "name": "amountDonated",
             "type": "u64"
+          },
+          {
+            "name": "finished",
+            "type": "bool"
           }
         ]
       }
