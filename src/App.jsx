@@ -109,9 +109,9 @@ function App() {
     try {
       const provider = getProvider();
       const program = new anchor.Program(idl, programID, provider);
-      const campaignDonation = inputDonation;
 
-      await program.rpc.donate(new anchor.BN(inputDonation * anchor.web3.LAMPORTS_PER_SOL), {
+
+      await program.rpc.donate(new anchor.BN(1 * anchor.web3.LAMPORTS_PER_SOL), {
         accounts: {
           campaign,
           user: provider.wallet.publicKey,
@@ -142,20 +142,29 @@ function App() {
       console.log('ERROR IN DONATING', error);
     }
   };
+
+  const finish = async (campaign) => {
+  try {
+      const provider = getProvider();
+      const program = new anchor.Program(idl, programID, provider);
+
+      await program.rpc.finishCampaign({
+        accounts: {
+          campaign,
+          user: provider.wallet.publicKey,
+        },
+      });
+      console.log('CAMPAIGN FINISHED');
+      getCampaign();
+    } catch (error) {
+      console.log('ERROR IN FINISHING CAMPAIGN', error);
+    }
+  };
   
   const renderNotConnectedContainer = () => {
     return <button onClick={connectWallet}>Connect Wallet</button>;
   };
   
-  const onInputChange = (event) =>{
-    const {inputName}= event.target;
-    setInputName(inputName);
-    const {inputDesc}= event.target;
-    setInputDesc(inputDesc);
-    const {inputDonation}= event.target;
-    setInputDonation(inputDonation);
-    
-  }
 
   const renderConnectedContainer = () => {
     return (
@@ -171,9 +180,9 @@ function App() {
             <p>Balance: {(campaign.amountDonated / anchor.web3.LAMPORTS_PER_SOL).toString()}</p>
             <p>{campaign.name}</p>
             <p>{campaign.description}</p>
-            <input placeholder="Donate Amount?" campaignDonation = {inputDonation} onChange={onInputChange}></input>
             <button onClick={() => donate(campaign.pubkey)}>Click to Donate</button>
             <button onClick={() => withdraw(campaign.pubkey)}>Click to Withdraw</button>
+            <button onClick={() => finish(campaign.pubkey)}>Finish Campaign</button>
             <br />
           </>
         ))}
